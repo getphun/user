@@ -19,7 +19,11 @@ return [
     ],
     '__dependencies' => [
         'core',
-        'db-mysql'
+        'db-mysql',
+        '/user-property',
+        '/user-email',
+        '/user-phone',
+        '/user-social'
     ],
     '_services' => [
         'user' => 'User\\Service\\User'

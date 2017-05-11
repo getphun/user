@@ -107,6 +107,13 @@ class User {
     public function __get($name){
         if(!$this->isLogin())
             return null;
-        return $this->_user->$name ?? null;
+        $result = $this->_user->$name ?? null;
+        if(!is_null($result))
+            return $result;
+            
+        // check if requested data is provide by user_property module
+        if(module_exists('user-property'))
+            return \UserProperty\Library\User::fetch($name);
+        return null;
     }
 }
