@@ -7,6 +7,7 @@
  */
 
 namespace User\Service;
+use UserEmail\Model\UserEmail as UEmail;
 
 class User {
 
@@ -80,9 +81,20 @@ class User {
     }
     
     public function loginByCred($name, $password){
-        $user = \User\Model\User::get(['name' => $name], false);
-        if(!$user)
-            return false;
+        $name = strtolower($name);
+        $user = null;
+        
+        if(module_exists('user-email') && filter_var($name, FILTER_VALIDATE_EMAIL)){
+            $user_email = UEmail::get(['address' => $name], false);
+            if($user_email)
+                $user = \User\Model\User::get(['id' => $user_email->user], false);
+        }
+        
+        if(!$user){
+            $user = \User\Model\User::get(['name' => $name], false);
+            if(!$user)
+                return false;
+        }
         
         if(!$this->testPassword($password, $user->password))
             return false;
