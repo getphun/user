@@ -132,6 +132,9 @@ class User {
         $result = $this->_user->$name ?? null;
         if(!is_null($result))
             return $result;
+        
+        if($name === 'login')
+            return $this->isLogin();
             
         // check if requested data is provide by user_property module
         if(module_exists('user-property'))
