@@ -135,6 +135,8 @@ class User {
         
         if($name === 'login')
             return $this->isLogin();
+        if($name === 'session')
+            return $this->_sess;
             
         // check if requested data is provide by user_property module
         if(module_exists('user-property'))
