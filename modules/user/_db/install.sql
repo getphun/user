@@ -3,6 +3,11 @@ CREATE TABLE IF NOT EXISTS `user` (
     `name` VARCHAR(50) NOT NULL UNIQUE,
     `password` VARCHAR(150),
     `fullname` VARCHAR(100),
+    -- 0 Deleted ( We're not going to remove user data permanetly )
+    -- 1 Unverified
+    -- 2 Verified
+    -- 3 Official
+    `status` TINYINT DEFAULT 1,
     `updated` TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
     `created` TIMESTAMP DEFAULT CURRENT_TIMESTAMP
 );
@@ -14,6 +19,11 @@ CREATE TABLE IF NOT EXISTS `user` (
 --     `name` VARCHAR(50) NOT NULL UNIQUE,
 --     `password` VARCHAR(150),
 --     `fullname` VARCHAR(100),
+--     -- 0 Deleted ( We're not going to remove user data permanetly )
+--     -- 1 Unverified
+--     -- 2 Verified
+--     -- 3 Official
+--     `status` TINYINT DEFAULT 1,
 --     `updated` TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
 --     `created` TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
 --     

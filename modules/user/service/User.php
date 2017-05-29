@@ -41,7 +41,7 @@ class User {
         
         $user = \User\Model\User::get(['id' => $session->user], false);
         
-        if(!$user)
+        if(!$user || !$user->status)
             return false;
         
         $this->_sess = $session;
@@ -73,7 +73,7 @@ class User {
     
     public function loginById($user_id){
         $user = \User\Model\User::get($user_id, false);
-        if(!$user)
+        if(!$user || !$user->status)
             return false;
         
         $this->_user = $user;
@@ -105,6 +105,9 @@ class User {
             if(!$user)
                 return false;
         }
+        
+        if(!$user->status)
+            return false;
         
         if(!$this->testPassword($password, $user->password))
             return false;
