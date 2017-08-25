@@ -35,5 +35,13 @@ return [
             'User\\Model\\UserSession' => 'modules/user/model/UserSession.php'
         ],
         'files' => []
+    ],
+    
+    'formatter' => [
+        'user' => [
+            'password' => 'delete',
+            'updated'  => 'date',
+            'created'  => 'date'
+        ]
     ]
 ];
