@@ -19,3 +19,4 @@ CREATE TABLE IF NOT EXISTS `user_session` (
     `expired` TIMESTAMP,
     `created` TIMESTAMP DEFAULT CURRENT_TIMESTAMP
 );
+CREATE INDEX `by_user` ON `user_session` ( `user` );
