@@ -71,14 +71,14 @@ class User {
         return (bool)$this->_user;
     }
     
-    public function loginById($user_id){
+    public function loginById($user_id, $session=true){
         $user = \User\Model\User::get($user_id, false);
         if(!$user || !$user->status)
             return false;
         
         $this->_user = $user;
         
-        return $this->_createSession($user->id);
+        return $session ? $this->_createSession($user->id) : true;
     }
     
     public function loginByCred($name, $password){
