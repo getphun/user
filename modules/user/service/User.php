@@ -136,6 +136,8 @@ class User {
         if(!is_null($result))
             return $result;
         
+        if($name === 'object')
+            return $this->_user;
         if($name === 'login')
             return $this->isLogin();
         if($name === 'session')
