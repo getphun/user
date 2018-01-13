@@ -43,5 +43,14 @@ return [
             'updated'  => 'date',
             'created'  => 'date'
         ]
+    ],
+    
+    'user' => [
+        'loginBy' => [
+            'name'  => true,
+            'email' => true,
+            'phone' => true,
+            'social'=> true
+        ]
     ]
 ];

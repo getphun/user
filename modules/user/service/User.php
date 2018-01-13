@@ -82,29 +82,33 @@ class User {
     }
     
     public function loginByCred($name, $password){
+        $dis = &\Phun::$dispatcher;
+        
+        $loginBy = $dis->config->user['loginBy'];
+        
         $name = strtolower($name);
         $user = null;
         
         // check if login by email
-        if(module_exists('user-email') && filter_var($name, FILTER_VALIDATE_EMAIL)){
+        if(module_exists('user-email') && $loginBy['email'] && filter_var($name, FILTER_VALIDATE_EMAIL)){
             $user_email = UEmail::get(['address' => $name], false);
             if($user_email)
                 $user = \User\Model\User::get(['id' => $user_email->user], false);
         }
         
         // check if login by phone number
-        if(module_exists('user-phone') && preg_match('!^\+([0-9- ]+)[0-9]$!', $name)){
+        if(module_exists('user-phone') && $loginBy['phone'] && preg_match('!^\+([0-9- ]+)[0-9]$!', $name)){
             $phone_number = preg_replace('![^0-9+]!', '', $name);
             $user_phone = UPhone::get(['number' => $phone_number], false);
             if($user_phone)
                 $user = \User\Model\User::get(['id' => $user_phone->user], false);
         }
         
-        if(!$user){
+        if(!$user && $loginBy['name'])
             $user = \User\Model\User::get(['name' => $name], false);
-            if(!$user)
-                return false;
-        }
+        
+        if(!$user)
+            return false;
         
         if(!$user->status)
             return false;
