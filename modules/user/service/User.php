@@ -67,21 +67,7 @@ class User {
         return password_hash($password, PASSWORD_DEFAULT);
     }
     
-    public function isLogin(){
-        return (bool)$this->_user;
-    }
-    
-    public function loginById($user_id, $session=true){
-        $user = \User\Model\User::get($user_id, false);
-        if(!$user || !$user->status)
-            return false;
-        
-        $this->_user = $user;
-        
-        return $session ? $this->_createSession($user->id) : true;
-    }
-    
-    public function loginByCred($name, $password){
+    public function getByCred($name, $password){
         $dis = &\Phun::$dispatcher;
         
         $loginBy = $dis->config->user['loginBy'];
@@ -115,7 +101,28 @@ class User {
         
         if(!$this->testPassword($password, $user->password))
             return false;
+            
+        return $user;
+    }
+    
+    public function isLogin(){
+        return (bool)$this->_user;
+    }
+    
+    public function loginById($user_id, $session=true){
+        $user = \User\Model\User::get($user_id, false);
+        if(!$user || !$user->status)
+            return false;
         
+        $this->_user = $user;
+        
+        return $session ? $this->_createSession($user->id) : true;
+    }
+    
+    public function loginByCred($name, $password){
+        $user = $this->getByCred($name, $password);
+        if(!$user)
+            return false;
         return $this->_createSession($user->id);
     }
     
