@@ -16,7 +16,7 @@ CREATE TABLE IF NOT EXISTS `user_session` (
     `id` INTEGER NOT NULL AUTO_INCREMENT PRIMARY KEY,
     `user` INTEGER NOT NULL,
     `hash` VARCHAR(150) NOT NULL UNIQUE,
-    `expired` TIMESTAMP,
+    `expired` DATETIME,
     `created` TIMESTAMP DEFAULT CURRENT_TIMESTAMP
 );
 CREATE INDEX `by_user` ON `user_session` ( `user` );
